@@ -11,7 +11,7 @@ git clone https://github.com/viniciuslimaan/soscantinasApi.git
 ## Tecnologias utilizadas
 
 -   PHP
-    -   laravel
+    -   Laravel
 
 ## Variáveis de ambiente
 
