@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -53,11 +54,10 @@ class OrderController extends Controller
     /**
      * Show a specific order
      *
-     * @param integer $client_id
      * @param integer $id
      * @return JsonResponse
      */
-    public function show(int $client_id, int $id): JsonResponse
+    public function show(int $id): JsonResponse
     {
         try {
             $return = Order::with('client', 'user', 'orderItems.product')
@@ -109,6 +109,7 @@ class OrderController extends Controller
     {
         try {
             $order = Order::where([['client_id', $client_id], ['id', $id]]);
+            OrderItem::where('order_id', $id)->delete();
 
             $order->delete();
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -107,6 +108,7 @@ class ProductController extends Controller
     {
         try {
             $product = Product::where([['user_id', $user_id], ['id', $id]]);
+            OrderItem::where('product_id', $id)->delete();
 
             $product->delete();
 

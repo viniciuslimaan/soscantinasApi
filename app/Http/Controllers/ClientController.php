@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -102,7 +104,15 @@ class ClientController extends Controller
     public function destroy(int $id): JsonResponse
     {
         try {
-            Client::find($id)->delete();
+            $client = Client::find($id);
+
+            OrderItem::whereIn('order_id', function ($query) use ($id) {
+                $query->select('id')
+                    ->from('orders')
+                    ->where('client_id', $id);
+            })->delete();
+            Order::where('client_id', $id)->delete();
+            $client->delete();
 
             $return = ['data' => ['msg' => 'Cliente excluído com sucesso!']];
             $code = 200;

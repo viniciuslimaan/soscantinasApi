@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OpeningHours;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\PaymentMethod;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -102,7 +107,18 @@ class UserController extends Controller
     public function destroy(int $id): JsonResponse
     {
         try {
-            User::find($id)->delete();
+            $user = User::find($id);
+
+            OrderItem::whereIn('order_id', function ($query) use ($id) {
+                $query->select('id')
+                    ->from('orders')
+                    ->where('user_id', $id);
+            })->delete();
+            Order::where('user_id', $id)->delete();
+            Product::where('user_id', $id)->delete();
+            PaymentMethod::where('user_id', $id)->delete();
+            OpeningHours::where('user_id', $id)->delete();
+            $user->delete();
 
             $return = ['data' => ['msg' => 'Usuário excluído com sucesso!']];
             $code = 200;
