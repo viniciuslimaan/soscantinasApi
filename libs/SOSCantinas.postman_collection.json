@@ -1230,18 +1230,18 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Salgado de Carne",
+									"value": "Pinga do lula",
 									"type": "default"
 								},
 								{
 									"key": "type",
-									"value": "snack",
+									"value": "drink",
 									"description": "['snack', 'sweet', 'drink', 'other' ]",
 									"type": "text"
 								},
 								{
 									"key": "price",
-									"value": "7.0",
+									"value": "13.99",
 									"type": "text"
 								},
 								{
@@ -1253,7 +1253,7 @@
 								{
 									"key": "description",
 									"value": "Um delicioso salgado de carne.",
-									"description": "null | varchar(200)",
+									"description": "null | varchar(150)",
 									"type": "text"
 								},
 								{
@@ -1315,6 +1315,32 @@
 								"1",
 								"product",
 								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "indexVisible",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/1/product/visible",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"1",
+								"product",
+								"visible"
 							]
 						}
 					},
@@ -1408,7 +1434,7 @@
 								{
 									"key": "description",
 									"value": "Um delicioso salgado de frango.",
-									"description": "null | varchar(200)",
+									"description": "null | varchar(150)",
 									"type": "text",
 									"disabled": true
 								},
@@ -1700,7 +1726,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/client/1/order/1",
+							"raw": "{{url}}/client/1/order/2",
 							"host": [
 								"{{url}}"
 							],
@@ -1708,7 +1734,7 @@
 								"client",
 								"1",
 								"order",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -1790,13 +1816,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/order/1/item/all",
+							"raw": "{{url}}/order/2/item/all",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"order",
-								"1",
+								"2",
 								"item",
 								"all"
 							]
