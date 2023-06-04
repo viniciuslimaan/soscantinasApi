@@ -18,7 +18,31 @@ class ProductController extends Controller
     public function index(int $user_id): JsonResponse
     {
         try {
-            $return = Product::where('user_id', $user_id)->get();
+            $return = Product::where('user_id', $user_id)
+                ->orderByRaw("FIELD(type, 'snack', 'other', 'drink', 'sweet')")
+                ->get();
+            $code = 200;
+        } catch (\Exception $e) {
+            $return = ['data' => ['msg' => 'Houve um erro ao listar todos os produtos!', 'error' => $e]];
+            $code = 400;
+        } finally {
+            return response()->json($return, $code);
+        }
+    }
+
+    /**
+     * Show all visible products for a user
+     *
+     * @param integer $user_id
+     * @return JsonResponse
+     */
+    public function indexVisible(int $user_id): JsonResponse
+    {
+        try {
+            $return = Product::where([['user_id', $user_id], ['hidden', 0]])
+                ->orderByRaw("old_price IS NULL, FIELD(type, 'snack', 'other', 'drink', 'sweet')")
+                ->orderByRaw("FIELD(type, 'snack', 'other', 'drink', 'sweet')")
+                ->get();
             $code = 200;
         } catch (\Exception $e) {
             $return = ['data' => ['msg' => 'Houve um erro ao listar todos os produtos!', 'error' => $e]];

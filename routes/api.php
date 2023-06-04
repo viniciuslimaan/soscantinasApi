@@ -22,7 +22,7 @@ use App\Http\Controllers\OrderItemController;
 |
 */
 
-// Admin routes
+// Admins routes
 Route::prefix('/admin')->group(function () {
     Route::get('/all', [AdminController::class, 'index']);
     Route::get('/{id}', [AdminController::class, 'show']);
@@ -31,7 +31,7 @@ Route::prefix('/admin')->group(function () {
     Route::delete('/{id}', [AdminController::class, 'destroy']);
 });
 
-// User routes
+// Users routes
 Route::prefix('/user')->group(function () {
     Route::get('/all', [UserController::class, 'index']);
     Route::get('/{id}', [UserController::class, 'show']);
@@ -53,15 +53,16 @@ Route::prefix('/user')->group(function () {
     Route::put('/{user_id}/openinghours/{id}', [OpeningHoursController::class, 'update']);
     Route::delete('/{user_id}/openinghours/{id}', [OpeningHoursController::class, 'destroy']);
 
-    // Product routes
+    // Products routes
     Route::get('/{user_id}/product/all', [ProductController::class, 'index']);
+    Route::get('/{user_id}/product/visible', [ProductController::class, 'indexVisible']);
     Route::get('/{user_id}/product/{id}', [ProductController::class, 'show']);
     Route::post('/product', [ProductController::class, 'store']);
     Route::put('/{user_id}/product/{id}', [ProductController::class, 'update']);
     Route::delete('/{user_id}/product/{id}', [ProductController::class, 'destroy']);
 });
 
-// Client routes
+// Clients routes
 Route::prefix('/client')->group(function () {
     Route::get('/all', [ClientController::class, 'index']);
     Route::get('/{id}', [ClientController::class, 'show']);
@@ -70,14 +71,14 @@ Route::prefix('/client')->group(function () {
     Route::delete('/{id}', [ClientController::class, 'destroy']);
 });
 
-// Order routes
+// Orders routes
 Route::get('/client/{client_id}/order/all', [OrderController::class, 'index']);
 Route::get('/client/{client_id}/order/{id}', [OrderController::class, 'show']);
 Route::post('/order', [OrderController::class, 'store']);
 Route::put('/client/{client_id}/order/{id}', [OrderController::class, 'update']);
 Route::delete('/client/{client_id}/order/{id}', [OrderController::class, 'destroy']);
 
-// Order_item routes
+// Order_items routes
 Route::get('/order/{order_id}/item/all', [OrderItemController::class, 'index']);
 Route::post('/order/item', [OrderItemController::class, 'store']);
 Route::put('/order/{order_id}/item/{id}', [OrderItemController::class, 'update']);
