@@ -63,7 +63,23 @@ class UserController extends Controller
     public function show(int $id): JsonResponse
     {
         try {
-            $return = User::with('payment_methods', 'opening_hours')->find($id);
+            $return = User::with('payment_methods', 'opening_hours')->find($id)->toArray();
+            $AddedProducts = Product::where('user_id', $id)->count();
+            $OrderedProducts = Order::where('user_id', $id)->count();
+            $withdrawnProducts = Order::where([['user_id', $id], ['status', 'withdrawn']])->count();
+            $canceledProducts = Order::where([['user_id', $id], ['status', 'canceled']])->count();
+
+            $summary = [
+                'summary' => [
+                    'added_products' => $AddedProducts,
+                    'ordered_products' => $OrderedProducts,
+                    'withtrawn_products' => $withdrawnProducts,
+                    'canceled_products' => $canceledProducts,
+                ]
+            ];
+
+            $return['summary'] = $summary['summary'];
+
             $code = 200;
         } catch (\Exception $e) {
             $return = ['data' => ['msg' => 'Houve um erro ao mostrar o usuário!', 'error' => $e]];
