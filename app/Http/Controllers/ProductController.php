@@ -19,7 +19,7 @@ class ProductController extends Controller
     {
         try {
             $return = Product::where('user_id', $user_id)
-                ->orderByRaw("FIELD(type, 'snack', 'other', 'drink', 'sweet')")
+                ->orderByRaw("FIELD(type, 'snack', 'sweet', 'drink', 'other')")
                 ->get();
             $code = 200;
         } catch (\Exception $e) {
@@ -40,8 +40,8 @@ class ProductController extends Controller
     {
         try {
             $return = Product::where([['user_id', $user_id], ['hidden', 0]])
-                ->orderByRaw("old_price IS NULL, FIELD(type, 'snack', 'other', 'drink', 'sweet')")
-                ->orderByRaw("FIELD(type, 'snack', 'other', 'drink', 'sweet')")
+                ->orderByRaw("old_price IS NULL, FIELD(type, 'snack', 'sweet', 'drink', 'other')")
+                ->orderByRaw("FIELD(type, 'snack', 'sweet', 'drink', 'other')")
                 ->get();
             $code = 200;
         } catch (\Exception $e) {
