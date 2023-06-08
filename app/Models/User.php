@@ -16,6 +16,7 @@ class User extends Model
         'cnpj',
         'name',
         'email',
+        'password',
         'phone',
         'school_name'
     ];

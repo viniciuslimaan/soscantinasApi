@@ -12,6 +12,7 @@ class Client extends Model
     protected $fillable = [
         'phone',
         'name',
+        'password'
     ];
 
     public function orders()
