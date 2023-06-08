@@ -16,8 +16,8 @@ class CreateOpeningHoursTable extends Migration
         Schema::create('opening_hours', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('week_days', ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']);
-            $table->time('time_start');
-            $table->time('time_end');
+            $table->time('time_start')->nullable();
+            $table->time('time_end')->nullable();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 
