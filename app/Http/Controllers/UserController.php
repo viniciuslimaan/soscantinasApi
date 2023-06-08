@@ -42,7 +42,52 @@ class UserController extends Controller
         try {
             $userData = $request->all();
 
-            User::create($userData);
+            $user = User::create($userData);
+
+            OpeningHours::insert([
+                [
+                    'week_days' => 'sunday',
+                    'time_start' => null,
+                    'time_end' => null,
+                    'user_id' => $user->id
+                ],
+                [
+                    'week_days' => 'monday',
+                    'time_start' => null,
+                    'time_end' => null,
+                    'user_id' => $user->id
+                ],
+                [
+                    'week_days' => 'tuesday',
+                    'time_start' => null,
+                    'time_end' => null,
+                    'user_id' => $user->id
+                ],
+                [
+                    'week_days' => 'wednesday',
+                    'time_start' => null,
+                    'time_end' => null,
+                    'user_id' => $user->id
+                ],
+                [
+                    'week_days' => 'thursday',
+                    'time_start' => null,
+                    'time_end' => null,
+                    'user_id' => $user->id
+                ],
+                [
+                    'week_days' => 'friday',
+                    'time_start' => null,
+                    'time_end' => null,
+                    'user_id' => $user->id
+                ],
+                [
+                    'week_days' => 'saturday',
+                    'time_start' => null,
+                    'time_end' => null,
+                    'user_id' => $user->id
+                ]
+            ]);
 
             $return = ['data' => ['msg' => 'Usuário cadastrado com sucesso!']];
             $code = 200;
