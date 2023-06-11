@@ -7,53 +7,218 @@
 	},
 	"item": [
 		{
-			"name": "admin",
+			"name": "auth",
 			"item": [
 				{
 					"name": "login",
+					"item": [
+						{
+							"name": "admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();",
+											"pm.environment.set(\"access_token\", data.access_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin@admin.com\",\n    \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/admin/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();",
+											"pm.environment.set(\"access_token\", data.access_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"sabordoce@cantina.com\",\n    \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "client",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();",
+											"pm.environment.set(\"access_token\", data.access_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"phone\": \"(14) 12345-6789\",\n    \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/client/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"client",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "logout",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"var data = pm.response.json();\r",
-									"pm.environment.set(\"access_token\", data.token);"
+									"var data = pm.response.json();",
+									"pm.environment.set(\"access_token\", data.access_token);"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
 					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "email",
-									"value": "vinicius@teste.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
 								}
 							]
 						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/admin/login",
+							"raw": "{{url}}/logout",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"admin",
-								"login"
+								"logout"
 							]
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
 				{
 					"name": "store",
 					"event": [
@@ -79,7 +244,13 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -119,10 +290,23 @@
 					},
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/admin/all",
 							"host": [
@@ -150,7 +334,13 @@
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/admin/1",
 							"host": [
@@ -178,7 +368,13 @@
 							]
 						},
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -228,7 +424,13 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/admin/1",
 							"host": [
@@ -247,51 +449,6 @@
 		{
 			"name": "client",
 			"item": [
-				{
-					"name": "login",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var data = pm.response.json();\r",
-									"pm.environment.set(\"access_token\", data.token);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "vinicius@teste.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/client/login",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"client",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "store",
 					"event": [
@@ -317,13 +474,19 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
 									"key": "phone",
-									"value": "(14) 12345-6789",
+									"value": "(14) 12345-6788",
 									"description": "(14) 12345-6789",
 									"type": "text"
 								},
@@ -361,7 +524,13 @@
 							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/client/all",
 							"host": [
@@ -389,7 +558,13 @@
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/client/1",
 							"host": [
@@ -417,7 +592,13 @@
 							]
 						},
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -467,7 +648,13 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/client/1",
 							"host": [
@@ -486,51 +673,6 @@
 		{
 			"name": "user",
 			"item": [
-				{
-					"name": "login",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var data = pm.response.json();\r",
-									"pm.environment.set(\"access_token\", data.token);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "vinicius@teste.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/user/login",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"user",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "store",
 					"event": [
@@ -556,13 +698,19 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
 									"key": "cnpj",
-									"value": "21.617.217/0001-15",
+									"value": "21.617.217/0001-14",
 									"description": "00.000.000/0000-00",
 									"type": "default"
 								},
@@ -573,7 +721,7 @@
 								},
 								{
 									"key": "email",
-									"value": "sabordoce@cantina.com",
+									"value": "sabordoce@email.com",
 									"type": "text"
 								},
 								{
@@ -613,10 +761,23 @@
 					},
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/all",
 							"host": [
@@ -644,7 +805,13 @@
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/1",
 							"host": [
@@ -683,7 +850,13 @@
 							]
 						},
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -753,7 +926,13 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/1",
 							"host": [
@@ -797,7 +976,13 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -845,7 +1030,13 @@
 							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/1/paymentmethod/all",
 							"host": [
@@ -875,7 +1066,13 @@
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/1/paymentmethod/2",
 							"host": [
@@ -901,7 +1098,13 @@
 							"type": "noauth"
 						},
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -947,7 +1150,13 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/1/paymentmethod/1",
 							"host": [
@@ -993,7 +1202,13 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -1006,13 +1221,13 @@
 								{
 									"key": "time_start",
 									"value": "06:30:00",
-									"description": "00:00:00",
+									"description": "00:00:00 | null",
 									"type": "text"
 								},
 								{
 									"key": "time_end",
 									"value": "10:30:00",
-									"description": "00:00:00",
+									"description": "00:00:00 | null",
 									"type": "text"
 								},
 								{
@@ -1046,7 +1261,13 @@
 							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/1/openinghours/all",
 							"host": [
@@ -1076,7 +1297,13 @@
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/1/openinghours/1",
 							"host": [
@@ -1117,7 +1344,13 @@
 							]
 						},
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -1131,13 +1364,13 @@
 								{
 									"key": "time_start",
 									"value": "06:30:00",
-									"description": "00:00:00",
+									"description": "00:00:00 | null",
 									"type": "text"
 								},
 								{
 									"key": "time_end",
 									"value": "10:30:00",
-									"description": "00:00:00",
+									"description": "00:00:00 | null",
 									"type": "text",
 									"disabled": true
 								},
@@ -1178,7 +1411,13 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/1/openinghours/1",
 							"host": [
@@ -1224,7 +1463,13 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -1304,9 +1549,15 @@
 							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/user/1/product/all",
+							"raw": "{{url}}/user/1/product/all?hidden=0",
 							"host": [
 								"{{url}}"
 							],
@@ -1315,32 +1566,13 @@
 								"1",
 								"product",
 								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "indexVisible",
-					"protocolProfileBehavior": {
-						"disabledSystemHeaders": {}
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/user/1/product/visible",
-							"host": [
-								"{{url}}"
 							],
-							"path": [
-								"user",
-								"1",
-								"product",
-								"visible"
+							"query": [
+								{
+									"key": "hidden",
+									"value": "0",
+									"description": "'1' ou '0'"
+								}
 							]
 						}
 					},
@@ -1360,7 +1592,13 @@
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/1/product/1",
 							"host": [
@@ -1401,7 +1639,13 @@
 							]
 						},
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -1494,7 +1738,13 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/user/1/product/2",
 							"host": [
@@ -1540,7 +1790,13 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -1593,17 +1849,36 @@
 							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/client/1/order/all",
+							"raw": "{{url}}/order/all?client_id=1&status=waiting",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"client",
-								"1",
 								"order",
 								"all"
+							],
+							"query": [
+								{
+									"key": "client_id",
+									"value": "1"
+								},
+								{
+									"key": "user_id",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "waiting"
+								}
 							]
 						}
 					},
@@ -1623,15 +1898,19 @@
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/client/1/order/1",
+							"raw": "{{url}}/order/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"client",
-								"1",
 								"order",
 								"1"
 							]
@@ -1664,7 +1943,13 @@
 							]
 						},
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -1672,37 +1957,29 @@
 									"key": "withdrawn_time",
 									"value": "2023-05-28 10:15:00",
 									"description": "YYYY-MM-DD HH:MM:SS | null",
-									"type": "default"
+									"type": "default",
+									"disabled": true
 								},
 								{
 									"key": "status",
-									"value": "waiting",
+									"value": "canceled",
 									"description": "['waiting', 'withdrawn', 'cancelled']",
-									"type": "text",
-									"disabled": true
+									"type": "text"
 								},
 								{
 									"key": "canceledBy",
 									"value": "client",
 									"description": "['client', 'user', 'system']",
 									"type": "text"
-								},
-								{
-									"key": "client_id",
-									"value": "1",
-									"type": "text",
-									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/client/1/order/1",
+							"raw": "{{url}}/order/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"client",
-								"1",
 								"order",
 								"1"
 							]
@@ -1724,15 +2001,19 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/client/1/order/2",
+							"raw": "{{url}}/order/2",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"client",
-								"1",
 								"order",
 								"2"
 							]
@@ -1770,7 +2051,13 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -1814,7 +2101,13 @@
 							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/order/2/item/all",
 							"host": [
@@ -1855,7 +2148,13 @@
 							]
 						},
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -1906,7 +2205,13 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/order/1/item/1",
 							"host": [
