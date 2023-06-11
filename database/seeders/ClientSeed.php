@@ -19,14 +19,14 @@ class ClientSeed extends Seeder
                 [
                     'phone' => '(14) 12345-6789',
                     'name' => 'Usuário Teste',
-                    'password' => '123',
+                    'password' => bcrypt('123456'),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
                 [
                     'phone' => '(14) 98765-4321',
                     'name' => 'Cuca Beludo',
-                    'password' => '123',
+                    'password' => bcrypt('123456'),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],

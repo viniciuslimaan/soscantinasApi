@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentMethodController;
@@ -21,6 +22,13 @@ use App\Http\Controllers\OrderItemController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// Auth routes
+Route::post('/admin/login', [AuthController::class, 'adminLogin']);
+Route::post('/user/login', [AuthController::class, 'userLogin']);
+Route::post('/client/login', [AuthController::class, 'clientLogin']);
+
+Route::post('/logout', [AuthController::class, 'logout']);
 
 // Admins routes
 Route::prefix('/admin')->group(function () {

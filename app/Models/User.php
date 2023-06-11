@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
 use App\Models\PaymentMethod;
 use App\Models\OpeningHours;
 use App\Models\Product;
 use App\Models\Order;
 
-class User extends Model
+class User extends Authenticatable implements JWTSubject
 {
     protected $hidden = ['password'];
 
@@ -20,6 +22,26 @@ class User extends Model
         'phone',
         'school_name'
     ];
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     public function payment_methods()
     {

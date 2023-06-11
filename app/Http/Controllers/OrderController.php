@@ -10,6 +10,14 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     /**
+     * Authenticate route
+     */
+    public function __construct()
+    {
+        $this->middleware('auth.routes:admin,api,client', ['except' => ['index', 'show']]);
+    }
+
+    /**
      * Show all orders for a client
      *
      * @param integer $client_id

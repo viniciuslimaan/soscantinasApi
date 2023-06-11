@@ -10,6 +10,14 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     /**
+     * Authenticate route
+     */
+    public function __construct()
+    {
+        $this->middleware('auth.routes:admin,api', ['except' => ['index', 'show']]);
+    }
+
+    /**
      * Show all products for a user
      *
      * @param integer $user_id

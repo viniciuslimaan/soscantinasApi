@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 class ClientController extends Controller
 {
     /**
+     * Authenticate route
+     */
+    public function __construct()
+    {
+        $this->middleware('auth.routes:admin,client', ['except' => ['store', 'show']]);
+    }
+
+    /**
      * Show all clients
      *
      * @return JsonResponse
@@ -38,6 +46,8 @@ class ClientController extends Controller
     {
         try {
             $clientData = $request->all();
+
+            $clientData['password'] = bcrypt($clientData['password']);
 
             Client::create($clientData);
 
@@ -82,6 +92,10 @@ class ClientController extends Controller
         try {
             $clientData = $request->all();
             $client = Client::find($id);
+
+            if ($clientData['password']) {
+                $clientData['password'] = bcrypt($clientData['password']);
+            }
 
             $client->update($clientData);
 

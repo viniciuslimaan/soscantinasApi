@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 class OpeningHoursController extends Controller
 {
     /**
+     * Authenticate route
+     */
+    public function __construct()
+    {
+        $this->middleware('auth.routes:admin,api', ['except' => ['index', 'show']]);
+    }
+
+    /**
      * Show all payment methods for a specific payment method
      *
      * @param integer $user_id

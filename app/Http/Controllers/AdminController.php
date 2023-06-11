@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     /**
+     * Authenticate route
+     */
+    public function __construct()
+    {
+        $this->middleware('auth.routes:admin');
+    }
+
+    /**
      * Show all admins
      *
      * @return JsonResponse
@@ -36,6 +44,8 @@ class AdminController extends Controller
     {
         try {
             $adminData = $request->all();
+
+            $adminData['password'] = bcrypt($adminData['password']);
 
             Admin::create($adminData);
 
@@ -80,6 +90,10 @@ class AdminController extends Controller
         try {
             $adminData = $request->all();
             $admin = Admin::find($id);
+
+            if ($adminData['password']) {
+                $adminData['password'] = bcrypt($adminData['password']);
+            }
 
             $admin->update($adminData);
 

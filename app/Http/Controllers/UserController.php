@@ -14,6 +14,14 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
+     * Authenticate route
+     */
+    public function __construct()
+    {
+        $this->middleware('auth.routes:admin,api', ['except' => ['store', 'show']]);
+    }
+
+    /**
      * Show all users
      *
      * @return JsonResponse
@@ -41,6 +49,8 @@ class UserController extends Controller
     {
         try {
             $userData = $request->all();
+
+            $userData['password'] = bcrypt($userData['password']);
 
             $user = User::create($userData);
 
@@ -146,6 +156,10 @@ class UserController extends Controller
         try {
             $userData = $request->all();
             $user = User::find($id);
+
+            if ($userData['password']) {
+                $userData['password'] = bcrypt($userData['password']);
+            }
 
             $user->update($userData);
 
