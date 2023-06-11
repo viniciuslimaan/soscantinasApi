@@ -63,7 +63,6 @@ Route::prefix('/user')->group(function () {
 
     // Products routes
     Route::get('/{user_id}/product/all', [ProductController::class, 'index']);
-    Route::get('/{user_id}/product/visible', [ProductController::class, 'indexVisible']);
     Route::get('/{user_id}/product/{id}', [ProductController::class, 'show']);
     Route::post('/product', [ProductController::class, 'store']);
     Route::put('/{user_id}/product/{id}', [ProductController::class, 'update']);
@@ -80,11 +79,11 @@ Route::prefix('/client')->group(function () {
 });
 
 // Orders routes
-Route::get('/client/{client_id}/order/all', [OrderController::class, 'index']);
-Route::get('/client/{client_id}/order/{id}', [OrderController::class, 'show']);
+Route::get('/order/all', [OrderController::class, 'index']);
+Route::get('/order/{id}', [OrderController::class, 'show']);
 Route::post('/order', [OrderController::class, 'store']);
-Route::put('/client/{client_id}/order/{id}', [OrderController::class, 'update']);
-Route::delete('/client/{client_id}/order/{id}', [OrderController::class, 'destroy']);
+Route::put('/order/{id}', [OrderController::class, 'update']);
+Route::delete('/order/{id}', [OrderController::class, 'destroy']);
 
 // Order_items routes
 Route::get('/order/{order_id}/item/all', [OrderItemController::class, 'index']);

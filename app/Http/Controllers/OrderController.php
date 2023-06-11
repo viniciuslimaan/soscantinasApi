@@ -23,10 +23,24 @@ class OrderController extends Controller
      * @param integer $client_id
      * @return JsonResponse
      */
-    public function index(int $client_id): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         try {
-            $return = Order::where('client_id', $client_id)->get();
+            $query = Order::query();
+
+            if ($request->has('user_id')) {
+                $query->where('user_id', $request->user_id);
+            }
+
+            if ($request->has('client_id')) {
+                $query->where('client_id', $request->client_id);
+            }
+
+            if ($request->has('status')) {
+                $query->where('status', $request->status);
+            }
+
+            $return = $query->get();
             $code = 200;
         } catch (\Exception $e) {
             $return = ['data' => ['msg' => 'Houve um erro ao listar todas as encomendas!', 'error' => $e]];
@@ -88,11 +102,11 @@ class OrderController extends Controller
      * @param integer $id
      * @return JsonResponse
      */
-    public function update(Request $request, int $client_id, int $id): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
         try {
             $orderData = $request->all();
-            $order = Order::where([['client_id', $client_id], ['id', $id]]);
+            $order = Order::where('id', $id);
 
             $order->update($orderData);
 
@@ -113,10 +127,10 @@ class OrderController extends Controller
      * @param integer $id
      * @return JsonResponse
      */
-    public function destroy(int $client_id, int $id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         try {
-            $order = Order::where([['client_id', $client_id], ['id', $id]]);
+            $order = Order::where('id', $id);
             OrderItem::where('order_id', $id)->delete();
 
             $order->delete();
