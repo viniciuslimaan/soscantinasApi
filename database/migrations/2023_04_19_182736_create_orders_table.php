@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->dateTime('withdrawn_time')->nullable();
             $table->enum('status', ['waiting', 'withdrawn', 'canceled'])->default('waiting');
-            $table->enum('canceledBy', ['client', 'user', 'system'])->nullable();
+            $table->enum('canceled_by', ['client', 'user', 'system'])->nullable();
             $table->integer('client_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();

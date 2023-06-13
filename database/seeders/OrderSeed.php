@@ -20,7 +20,7 @@ class OrderSeed extends Seeder
                 [
                     'withdrawn_time' => null,
                     'status' => 'waiting',
-                    'canceledBy' => null,
+                    'canceled_by' => null,
                     'client_id' => 1,
                     'user_id' => 1,
                     'created_at' => now(),
@@ -29,7 +29,7 @@ class OrderSeed extends Seeder
                 [
                     'withdrawn_time' => Carbon::create(2023, 5, 28, 10, 15, 0)->toDateTimeString(),
                     'status' => 'withdrawn',
-                    'canceledBy' => null,
+                    'canceled_by' => null,
                     'client_id' => 1,
                     'user_id' => 1,
                     'created_at' => now(),
@@ -38,7 +38,7 @@ class OrderSeed extends Seeder
                 [
                     'withdrawn_time' => null,
                     'status' => 'canceled',
-                    'canceledBy' => 'client',
+                    'canceled_by' => 'client',
                     'client_id' => 1,
                     'user_id' => 1,
                     'created_at' => now(),
