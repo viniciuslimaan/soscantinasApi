@@ -119,17 +119,18 @@ class UserController extends Controller
     {
         try {
             $return = User::with('payment_methods', 'opening_hours')->find($id)->toArray();
-            $AddedProducts = Product::where('user_id', $id)->count();
-            $OrderedProducts = Order::where('user_id', $id)->count();
-            $withdrawnProducts = Order::where([['user_id', $id], ['status', 'withdrawn']])->count();
-            $canceledProducts = Order::where([['user_id', $id], ['status', 'canceled']])->count();
+
+            $activatedProducts = Product::where([['user_id', $id], ['hidden', 0]])->count();
+            $ordersPlaced = Order::where('user_id', $id)->count();
+            $withdrawnOrders = Order::where([['user_id', $id], ['status', 'withdrawn']])->count();
+            $canceledOrders = Order::where([['user_id', $id], ['status', 'canceled']])->count();
 
             $summary = [
                 'summary' => [
-                    'added_products' => $AddedProducts,
-                    'ordered_products' => $OrderedProducts,
-                    'withtrawn_products' => $withdrawnProducts,
-                    'canceled_products' => $canceledProducts,
+                    'activated_products' => $activatedProducts,
+                    'orders_placed' => $ordersPlaced,
+                    'withtrawn_orders' => $withdrawnOrders,
+                    'canceled_orders' => $canceledOrders,
                 ]
             ];
 
