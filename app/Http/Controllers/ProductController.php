@@ -29,7 +29,7 @@ class ProductController extends Controller
             $query = Product::query();
 
             if ($request->has('hidden')) {
-                $query->where([['user_id', $user_id], ['hidden', $request->hidden]])
+                $query->where([['user_id', $user_id], ['hidden', $request->input('hidden')]])
                     ->orderByRaw("old_price IS NULL, FIELD(type, 'snack', 'sweet', 'drink', 'other')")
                     ->orderByRaw("FIELD(type, 'snack', 'sweet', 'drink', 'other')");
             } else {

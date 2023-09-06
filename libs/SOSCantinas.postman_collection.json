@@ -1557,7 +1557,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/user/1/product/all?hidden=0",
+							"raw": "{{url}}/user/1/product/all",
 							"host": [
 								"{{url}}"
 							],
@@ -1571,7 +1571,8 @@
 								{
 									"key": "hidden",
 									"value": "0",
-									"description": "'1' ou '0'"
+									"description": "'1' | '0'",
+									"disabled": true
 								}
 							]
 						}
@@ -1814,7 +1815,7 @@
 									"type": "text"
 								},
 								{
-									"key": "canceledBy",
+									"key": "canceled_by",
 									"value": "client",
 									"description": "['client', 'user', 'system']",
 									"type": "text",
@@ -1857,7 +1858,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/order/all?client_id=1&status=waiting",
+							"raw": "{{url}}/order/all?user_id=1&sort=status",
 							"host": [
 								"{{url}}"
 							],
@@ -1868,16 +1869,21 @@
 							"query": [
 								{
 									"key": "client_id",
-									"value": "1"
-								},
-								{
-									"key": "user_id",
-									"value": "2",
+									"value": "1",
 									"disabled": true
 								},
 								{
+									"key": "user_id",
+									"value": "1"
+								},
+								{
 									"key": "status",
-									"value": "waiting"
+									"value": "waiting",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "status"
 								}
 							]
 						}
@@ -1963,25 +1969,26 @@
 								{
 									"key": "status",
 									"value": "canceled",
-									"description": "['waiting', 'withdrawn', 'cancelled']",
+									"description": "['waiting', 'withdrawn', 'canceled']",
 									"type": "text"
 								},
 								{
-									"key": "canceledBy",
-									"value": "client",
+									"key": "canceled_by",
+									"value": "user",
 									"description": "['client', 'user', 'system']",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/order/1",
+							"raw": "{{url}}/order/3",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"order",
-								"1"
+								"3"
 							]
 						}
 					},
