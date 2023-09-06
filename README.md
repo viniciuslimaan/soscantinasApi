@@ -6,7 +6,21 @@ Para visualizar em seu computador use:
 
 ```
 git clone https://github.com/viniciuslimaan/soscantinasApi.git
+
+cd soscantinas
+
+composer i
+
+php artisan make:migrate
+--> ou caso queira dados fake execute:
+php artisan make:migrate --seed
+
+php artisan jwt:secret
+
+php artisan serve
 ```
+
+Obs: é necessário a configuração do .env e a criação de uma tabela chamada 'soscantinas' antes de executar os comandos php.
 
 ## Tecnologias utilizadas
 
